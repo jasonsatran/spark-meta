@@ -1,0 +1,14 @@
+target/
+lib_managed/
+src_managed/
+project/boot/
+tmp
+
+.idea
+*.iml
+
+*.swp
+
+.DS_Store
+metastore_db/*
+derby.log
