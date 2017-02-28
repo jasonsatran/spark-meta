@@ -6,7 +6,7 @@ import org.apache.spark.sql.functions._
 object Helper {
 
   def percentFill(numerator: Double, denominator: Double) : Double = {
-    return round((numerator.toDouble / denominator.toDouble) * 100)
+    round((numerator.toDouble / denominator.toDouble) * 100)
   }
 
   def round (x: Double) : Double = {
@@ -17,13 +17,10 @@ object Helper {
   }
 
   def isEmpty(x: String): Boolean = {
-    if (x ==null){
-      return true
-    }else if (x.trim==""){
-      return true
-    }
-    else{
-      return false
+    if (x == null || x.trim == "") {
+      true
+    } else {
+      false
     }
   }
 
@@ -35,4 +32,5 @@ object Helper {
   }
 
   val udfIsEmpty = udf[Boolean,String] (isEmpty)
+
 }
