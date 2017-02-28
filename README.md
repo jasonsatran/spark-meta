@@ -10,14 +10,14 @@ The simplest way to execute the profile on a DataFrame is by doing this:
 
 (In this example df is a DataFrame.  Please see the note about performance below if your DataFrame is large.)
 
-````
-import  com.jasonsatran.spark.meta.profile.DataFrameUtils._
+```scala
+import com.jasonsatran.spark.meta.profile.DataFrameUtils._
 df.profile.show
-````
+```
 
 will produce results like this:
 
-````
+```
 scala> df.profile.show
 +----------------+------------+-------------+-----------+------------+
 |     Column Name|Record Count|Unique Values|Null Values|Percent Fill|
@@ -27,8 +27,7 @@ scala> df.profile.show
 |        column 3|           5|            3|          0|       100.0|
 +----------------+------------+-------------+-----------+------------+
 
-````
-
+```
 
 ### Results Explained
 
@@ -48,21 +47,21 @@ Limit the columns to only those that are required as these calculations are proc
 
 In other words before running profile on a DataFrame it is advisable to select only the required colums:
 
-````
+```scala
 someDataFrame.select("column1","column2").profile
-````
+```
 
 will perform better than
 
-````
+```scala
 someDataFrame.profile
-````
+```
 
 ### Demonstration
 
 The following commands can be used to demonstrate the profile method in the Spark shell.
 
-````
+```scala
 import com.jasonsatran.spark.meta.profile.DataFrameProfile
 import spark.implicits._
 
@@ -83,5 +82,4 @@ println(profile.toString)
 import  com.jasonsatran.spark.meta.profile.DataFrameUtils._
 
 df.profile.show
-
-````
+```
