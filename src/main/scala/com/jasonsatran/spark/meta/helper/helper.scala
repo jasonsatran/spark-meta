@@ -16,12 +16,8 @@ object Helper {
     result.toDouble
   }
 
-  def isEmpty(x: String): Boolean = {
-    if (x == null || x.trim == "") {
-      true
-    } else {
-      false
-    }
+  def isEmpty(x: String) : Boolean = {
+    x == null || x.trim == ""
   }
 
   val COLUMN_SIZE = 60
