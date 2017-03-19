@@ -6,27 +6,36 @@ The first version of this library adds a profile command to a DataFrame via an i
 
 ## Profile
 
-The simplest way to execute the profile on a DataFrame is by doing this:
-
-(In this example df is a DataFrame.  Please see the note about performance below if your DataFrame is large.)
+To use profile execute the implicit method profile on a DataFrame.  An example follows.
 
 ```scala
 import com.jasonsatran.spark.meta.profile.DataFrameUtils._
+
+val df = Seq(
+
+      ("Mets","1986", "New York", "27896702"),
+      ("Yankees", "2009", "New York", "3063405"),
+      ("Cubs", "2016", "Chicago", "3232420"),
+      ("White Sox","2005","Chicago", "1746293"),
+      ("Nationals","","Washington", "2481938"),
+      ("Senators","1924","Washington",null)
+    ).toDF("Team", "Last Championship", "City", "2016 Attendance")
+
 df.profile.show
+
 ```
 
 will produce results like this:
 
 ```
-scala> df.profile.show
-+----------------+------------+-------------+-----------+------------+
-|     Column Name|Record Count|Unique Values|Null Values|Percent Fill|
-+----------------+------------+-------------+-----------+------------+
-|        column 1|           5|            4|          0|       100.0|
-|        column 2|           5|            5|          1|        80.0|
-|        column 3|           5|            3|          0|       100.0|
-+----------------+------------+-------------+-----------+------------+
-
++-----------------+------------+-------------+-------------+-----------+------------+
+|      Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill|
++-----------------+------------+-------------+-------------+-----------+------------+
+|             Team|           6|            6|            0|          0|       100.0|
+|Last Championship|           6|            6|            1|          0|        83.3|
+|             City|           6|            3|            0|          0|       100.0|
+|  2016 Attendance|           6|            6|            0|          1|        83.3|
++-----------------+------------+-------------+-------------+-----------+------------+
 ```
 
 ### Results Explained
@@ -37,8 +46,9 @@ We provide the following metrics on each column of the input DataFrame
 
 - Record Count:  The total number of records in the column
 - Unique Values:  The distinct count of unique values in a column
-- *Null Values:  The count of null or empty string values in a column
-- Percent Fill:  Non null or empty / record count
+- Empty Strings:  The count of empty strings in a column
+- Null Values:  The count of null values in a column
+- Percent Fill:  The percentage of records that are not empty string or null
 
 
 ### A Note about Performance
@@ -55,31 +65,4 @@ will perform better than
 
 ```scala
 someDataFrame.profile
-```
-
-### Demonstration
-
-The following commands can be used to demonstrate the profile method in the Spark shell.
-
-```scala
-import com.jasonsatran.spark.meta.profile.DataFrameProfile
-import spark.implicits._
-
-val df =   Seq(
-               ("Mets","1986","New York"),
-               ("Yankees","2009","New York"),
-               ("Cubs","2016","Chicago"),
-               ("Cubs","2005","Chicago"),
-               ("Nationals","","Washington")
-             ).toDF("team","lastChampionship","city")
-
-val profile = DataFrameProfile(df)
-profile.toDataFrame.show
-println(profile.toString)
-
-// alternatively, a convenience method is added via implicit class
-
-import  com.jasonsatran.spark.meta.profile.DataFrameUtils._
-
-df.profile.show
 ```

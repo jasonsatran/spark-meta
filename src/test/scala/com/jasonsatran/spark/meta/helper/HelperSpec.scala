@@ -1,7 +1,7 @@
 package com.jasonsatran.spark.meta.helper
 
 import org.scalatest._
-import Helper.{round,percentFill,isEmpty}
+import Helper.{round, divide, isEmpty}
 
 class HelperSpec extends FunSpec with BeforeAndAfterAll with ShouldMatchers {
 
@@ -13,7 +13,7 @@ class HelperSpec extends FunSpec with BeforeAndAfterAll with ShouldMatchers {
     }
 
     it("should execute percent fill"){
-      assert(percentFill(7,9)===77.8)
+      assert(divide(7,9)===77.8)
     }
 
     describe ("isEmpty") {
@@ -21,14 +21,14 @@ class HelperSpec extends FunSpec with BeforeAndAfterAll with ShouldMatchers {
         case class test(input: String, expected: Boolean)
         val tests = List(
           test("someting", false)
-          , test("", true)
-          , test(null, true)
+          , test("",  true)
+          , test(null, false)
           ,test("   ", true)
         )
         tests.foreach { (x: test) =>
           val actual = isEmpty(x.input)
           actual == x.expected
-          assert(actual===x.expected)
+          assert(actual === x.expected)
         }
       }
     }

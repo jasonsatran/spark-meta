@@ -1,6 +1,6 @@
-                                                 Column Name                                                Record Count                                               Unique Values                                                 Null Values                                                Percent Fill
-                                                      Agency                                                        5898                                                          87                                                          20                                                        99.7
-                                                    Platform                                                        5898                                                          23                                                           0                                                       100.0
-                                                         Url                                                        5898                                                         287                                                         160                                                        97.3
-                                                Date Sampled                                                        5898                                                          20                                                           0                                                       100.0
-                            Likes/Followers/Visits/Downloads                                                        5898                                                        2159                                                        1920                                                        67.4
+Column Name,Record Count,Unique Values,Empty Strings,Null Values,Percent Fill
+Agency,5898,87,0,20,99.7
+Platform,5898,23,0,0,100.0
+Url,5898,287,0,160,97.3
+Date Sampled,5898,20,0,0,100.0
+Likes/Followers/Visits/Downloads,5898,2159,0,1920,67.4
