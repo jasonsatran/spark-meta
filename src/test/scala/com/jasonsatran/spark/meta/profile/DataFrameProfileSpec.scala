@@ -9,21 +9,15 @@ class DataFrameProfileSpec extends FunSpec with  DataFrameSuiteBase {
   import spark.implicits._
 
   describe ("DataFrameProfile") {
-    it("profiles a dataframe") {
+    it("returns expected columns") {
       val profiledResult = DataFrameProfile(baseballDf).toDataFrame
-      assertDataFrameEquals(profiledResult,expectedDf)
+      assert(profiledResult.columns.mkString("|") === "Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill")
     }
 
     it("displays as a toString"){
       val actual : String = DataFrameProfile(baseballDf).toString
-      val expected =
-        """
-          |                                                 Column Name                                                Record Count                                               Unique Values                                                 Null Values                                                Percent Fill
-          |                                                        team                                                           5                                                           4                                                           0                                                       100.0
-          |                                            lastChampionship                                                           5                                                           5                                                           1                                                        80.0
-          |                                                        city                                                           5                                                           3                                                           0                                                       100.0
-        """.stripMargin.trim
-      assert(actual.trim===expected)
+      val expected =   scala.io.Source.fromFile("./src/test/Resources/expected/expectedBaseballTest").getLines().mkString("\n")
+      assert(actual.trim === expected)
     }
 
     it ("works with a second data set"){
@@ -38,22 +32,14 @@ class DataFrameProfileSpec extends FunSpec with  DataFrameSuiteBase {
     }
   }
 
-  def expectedDf : DataFrame = {
-    Seq(
-      ("team","5","4","0","100.0"),
-      ("lastChampionship","5","5","1","80.0"),
-      ("city","5","3","0","100.0")
-    ).toDF("Column Name","Record Count", "Unique Values", "Null Values" , "Percent Fill")
-  }
-
   def baseballDf: DataFrame = {
     Seq(
-      ("Mets","1986","New York"),
-      ("Yankees","2009","New York"),
-      ("Cubs","2016","Chicago"),
-      ("Cubs","2005","Chicago"),
-      ("Nationals","","Washington")
-    ).toDF("team","lastChampionship","city")
+      ("Mets","1986", "New York", "nick"),
+      ("Yankees", "2009", "New York", "dave"),
+      ("Cubs", "2016", "Chicago", "bruce"),
+      ("White Sox","2005","Chicago", null),
+      ("Nationals","","Washington", null)
+    ).toDF("team", "lastChampionship", "city", "number 1 fan")
   }
 }
 

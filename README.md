@@ -6,27 +6,38 @@ The first version of this library adds a profile command to a DataFrame via an i
 
 ## Profile
 
-The simplest way to execute the profile on a DataFrame is by doing this:
-
-(In this example df is a DataFrame.  Please see the note about performance below if your DataFrame is large.)
+To use profile exuecte the implicit method profile on a DataFrame.  An example follows.
 
 ```scala
 import com.jasonsatran.spark.meta.profile.DataFrameUtils._
+
+val df = Seq(
+
+      ("Mets","1986", "New York", "27896702"),
+      ("Yankees", "2009", "New York", "3063405"),
+      ("Cubs", "2016", "Chicago", "3232420"),
+      ("White Sox","2005","Chicago", "1746293"),
+      ("Nationals","","Washington", "2481938"),
+      ("Senators","1924","Washington",null)
+    ).toDF("Team", "Last Championship", "City", "2016 Attendance")
+
 df.profile.show
+
 ```
+
 
 will produce results like this:
 
 ```
 scala> df.profile.show
-+----------------+------------+-------------+-----------+------------+
-|     Column Name|Record Count|Unique Values|Null Values|Percent Fill|
-+----------------+------------+-------------+-----------+------------+
-|        column 1|           5|            4|          0|       100.0|
-|        column 2|           5|            5|          1|        80.0|
-|        column 3|           5|            3|          0|       100.0|
-+----------------+------------+-------------+-----------+------------+
-
++-----------------+------------+-------------+-------------+-----------+------------+
+|      Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill|
++-----------------+------------+-------------+-------------+-----------+------------+
+|             Team|           6|            6|            0|          0|       100.0|
+|Last Championship|           6|            6|            1|          0|        83.3|
+|             City|           6|            3|            0|          0|       100.0|
+|  2016 Attendance|           6|            6|            0|          1|        83.3|
++-----------------+------------+-------------+-------------+-----------+------------+
 ```
 
 ### Results Explained

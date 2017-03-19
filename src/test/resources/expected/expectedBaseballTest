@@ -1,0 +1,5 @@
+Column Name,Record Count,Unique Values,Empty Strings,Null Values,Percent Fill
+team,5,5,0,0,100.0
+lastChampionship,5,5,1,0,80.0
+city,5,3,0,0,100.0
+number 1 fan,5,4,0,2,60.0

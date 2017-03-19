@@ -1,8 +1,9 @@
 name := "spark-meta"
 
-version := "0.0.1"
+version := "0.1.0"
 
 scalaVersion := "2.11.8"
+
 sparkVersion := "2.1.0"
 
 sparkComponents += "sql"
