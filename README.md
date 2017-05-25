@@ -1,10 +1,11 @@
 # spark-meta
 
-Meta data utilities for the Spark DataFrame.
+Meta data utilities for the Spark DataFrame
 
-The first version of this library adds a profile command to a DataFrame via an implicit class.   This works in a similar way to the df.describe, but acts on non-numeric columns.
 
 ## Profile
+
+Data profiling works similar to df.describe(), but acts on non-numeric columns.
 
 To use profile execute the implicit method profile on a DataFrame.  An example follows.
 
@@ -28,14 +29,14 @@ df.profile.show
 will produce results like this:
 
 ```
-+-----------------+------------+-------------+-------------+-----------+------------+
-|      Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill|
-+-----------------+------------+-------------+-------------+-----------+------------+
-|             Team|           6|            6|            0|          0|       100.0|
-|Last Championship|           6|            6|            1|          0|        83.3|
-|             City|           6|            3|            0|          0|       100.0|
-|  2016 Attendance|           6|            6|            0|          1|        83.3|
-+-----------------+------------+-------------+-------------+-----------+------------+
++-----------------+------------+-------------+-------------+-----------+------------+---------------+
+|      Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill|Percent Numeric|
++-----------------+------------+-------------+-------------+-----------+------------+---------------+
+|             Team|           6|            6|            0|          0|       100.0|            0.0|
+|Last Championship|           6|            6|            1|          0|        83.3|           83.3|
+|             City|           6|            3|            0|          0|       100.0|            0.0|
+|  2016 Attendance|           6|            6|            0|          1|        83.3|           83.3|
++-----------------+------------+-------------+-------------+-----------+------------+---------------+
 ```
 
 ### Results Explained
@@ -49,6 +50,7 @@ We provide the following metrics on each column of the input DataFrame
 - Empty Strings:  The count of empty strings in a column
 - Null Values:  The count of null values in a column
 - Percent Fill:  The percentage of records that are not empty string or null
+- Percent Numeric:  The percentage of records that are numeric
 
 
 ### A Note about Performance

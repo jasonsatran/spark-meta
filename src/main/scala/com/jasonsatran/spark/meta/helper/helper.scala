@@ -2,10 +2,11 @@ package com.jasonsatran.spark.meta.helper
 
 import java.text.DecimalFormat
 import org.apache.spark.sql.functions._
+import scala.util.Try
 
 object Helper {
 
-  def divide(numerator: Double, denominator: Double) : Double = {
+  def percentage(numerator: Double, denominator: Double) : Double = {
     round((numerator.toDouble / denominator.toDouble) * 100)
   }
 
@@ -21,6 +22,12 @@ object Helper {
     x.trim == ""
   }
 
+  def isNumeric(x: String) : Boolean = {
+    val z: Option[Float] =  Try(x.toFloat).toOption
+    z != None
+  }
+
   val udfIsEmpty = udf[Boolean,String] (isEmpty)
+  val udfIsNumeric = udf[Boolean, String](isNumeric)
 
 }

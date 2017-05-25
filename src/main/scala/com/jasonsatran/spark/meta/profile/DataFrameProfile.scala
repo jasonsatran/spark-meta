@@ -13,6 +13,8 @@ case class DataFrameProfile(df: DataFrame)  {
     for (c <- df.columns.toList)
       yield ColumnProfile.ColumnProfileFactory(df,c)
 
+  val header : List[String] = List("Column Name","Record Count", "Unique Values", "Empty Strings" ,"Null Values", "Percent Fill", "Percent Numeric")
+
   def toDataFrame : DataFrame = {
     def dfFromListWithHeader(data: List[List[String]], header: String) : DataFrame = {
       val rows = data.map{x => Row(x:_*)}
@@ -21,15 +23,13 @@ case class DataFrameProfile(df: DataFrame)  {
         map(fieldName => StructField(fieldName, StringType, true)))
       spark.sqlContext.createDataFrame(rdd, schema)
     }
-    val header : List[String] = List("Column Name","Record Count", "Unique Values", "Empty Strings" ,"Null Values", "Percent Fill")
     val data = columnProfiles.map(_.columnData)
     dfFromListWithHeader(data,header.mkString(","))
   }
 
   override def toString : String = {
-    val header : String = List("Column Name","Record Count", "Unique Values", "Empty Strings", "Null Values" , "Percent Fill").mkString(",")
     val colummProfileStrings : List[String] = columnProfiles.map(_.toString)
-    (header :: columnProfiles).mkString("\n")
+    (header.mkString(",") :: columnProfiles).mkString("\n")
   }
 }
 

@@ -20,6 +20,7 @@ class ColumnProfileSpec extends FunSpec with  DataFrameSuiteBase {
       val colProfile2 = ColumnProfile.ColumnProfileFactory(baseballDf, "lastChampionship")
       assert(colProfile2.nullValues ===0 )
       assert(colProfile2.emptyStringValues === 1)
+      assert(colProfile2.numericValues === 4)
 
     }
   }

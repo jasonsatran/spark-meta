@@ -11,7 +11,7 @@ class DataFrameProfileSpec extends FunSpec with  DataFrameSuiteBase {
   describe ("DataFrameProfile") {
     it("returns expected columns") {
       val profiledResult = DataFrameProfile(baseballDf).toDataFrame
-      assert(profiledResult.columns.mkString("|") === "Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill")
+      assert(profiledResult.columns.mkString("|") === "Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill|Percent Numeric")
     }
 
     it("displays as a toString"){
