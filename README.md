@@ -29,14 +29,14 @@ df.profile.show
 will produce results like this:
 
 ```
-+-----------------+------------+-------------+-------------+-----------+------------+---------------+
-|      Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill|Percent Numeric|
-+-----------------+------------+-------------+-------------+-----------+------------+---------------+
-|             Team|           6|            6|            0|          0|       100.0|            0.0|
-|Last Championship|           6|            6|            1|          0|        83.3|           83.3|
-|             City|           6|            3|            0|          0|       100.0|            0.0|
-|  2016 Attendance|           6|            6|            0|          1|        83.3|           83.3|
-+-----------------+------------+-------------+-------------+-----------+------------+---------------+
++-----------------+------------+-------------+-------------+-----------+------------+---------------+----------+
+|      Column Name|Record Count|Unique Values|Empty Strings|Null Values|Percent Fill|Percent Numeric|Max Length|
++-----------------+------------+-------------+-------------+-----------+------------+---------------+----------+
+|             Team|           6|            6|            0|          0|       100.0|            0.0|         9|
+|Last Championship|           6|            6|            1|          0|        83.3|           83.3|         4|
+|             City|           6|            3|            0|          0|       100.0|            0.0|         8|
+|  2016 Attendance|           6|            6|            0|          1|        83.3|           83.3|         8|
++-----------------+------------+-------------+-------------+-----------+------------+---------------+----------+
 ```
 
 ### Results Explained
@@ -51,6 +51,7 @@ We provide the following metrics on each column of the input DataFrame
 - Null Values:  The count of null values in a column
 - Percent Fill:  The percentage of records that are not empty string or null
 - Percent Numeric:  The percentage of records that are numeric
+- Max Len:  The max length of data
 
 
 ### A Note about Performance
@@ -68,3 +69,11 @@ will perform better than
 ```scala
 someDataFrame.profile
 ```
+
+### Another Note about Performance
+
+For larger data frames run it on a sample
+
+```scala
+someDataFrame.sample(true, .01).select("col1").profile
+````

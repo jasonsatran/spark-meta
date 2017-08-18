@@ -1,7 +1,7 @@
 package com.jasonsatran.spark.meta.helper
 
 import org.scalatest._
-import Helper.{round, percentage, isEmpty, isNumeric}
+import Helper.{round, percentage, isEmpty, isNumeric, fieldLen}
 
 class HelperSpec extends FunSpec with BeforeAndAfterAll with ShouldMatchers {
 
@@ -52,6 +52,33 @@ class HelperSpec extends FunSpec with BeforeAndAfterAll with ShouldMatchers {
         }
       }
     }
+
+    describe("maxFieldLength"){
+      it("returns the length of an int"){
+        val y: Int = 10
+        val x = fieldLen(y)
+        assert(x === 2)
+      }
+
+      it("handles null"){
+        val y: String = null
+        val x =fieldLen(y)
+        assert(x === 0)
+
+        val z: Any = null
+        assert (fieldLen(z) == 0)
+
+        assert(fieldLen(null) == 0)
+      }
+
+      it("return the length of a string"){
+        val y: String = "abc"
+        val x =fieldLen(y)
+        assert(x === 3)
+      }
+
+    }
+
 
   }
 }

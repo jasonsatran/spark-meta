@@ -10,6 +10,7 @@ case class ColumnProfile(columnName: String
                           ,emptyStringValues : Long
                           ,nullValues: Long
                           ,numericValues: Long
+                          ,maxFieldLength: Int
                         ){
 
   lazy val percentFill: Double = calculatedPercentFill(nullValues, emptyStringValues, totalDataSetSize)
@@ -24,6 +25,7 @@ case class ColumnProfile(columnName: String
       ,nullValues
       ,percentFill
       ,percentNumeric
+      ,maxFieldLength
     ).map(_.toString)
   }
 
@@ -45,6 +47,7 @@ case class ColumnProfile(columnName: String
       ,nullValues
       ,percentFill
       ,percentNumeric
+      ,maxFieldLength.toString()
     ).mkString(",")
   }
 }
@@ -58,6 +61,7 @@ object ColumnProfile{
     val emptyCount = dfColumn.withColumn("isEmpty", udfIsEmpty(col(columnName))).filter(col("isEmpty")===true).count
     val nullCount = dfColumn.withColumn("isNull", col(columnName).isNull).filter(col("isNull")).count()
     val numericCount = dfColumn.withColumn("isNumeric", udfIsNumeric(col(columnName))).filter(col("isNumeric")===true).count
-    new ColumnProfile(columnName, recordCount, uniqueValues, emptyCount, nullCount, numericCount)
+    val maxFieldLength = dfColumn.withColumn("fieldLen", udfFieldLen(col(columnName))).groupBy(col("fieldLen")).max("fieldLen").collect()(0)(0).asInstanceOf[Int]
+    new ColumnProfile(columnName, recordCount, uniqueValues, emptyCount, nullCount, numericCount, maxFieldLength)
   }
 }

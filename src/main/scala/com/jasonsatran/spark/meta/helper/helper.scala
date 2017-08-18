@@ -27,7 +27,25 @@ object Helper {
     z != None
   }
 
+  def fieldLen(x: Any): Int ={
+
+    if (Option(x) == None) return 0  // null values are not empty by definition
+
+    val stringVal: String = x match {
+      case x: String => x
+      case x: Integer => x.toString()
+      case x: Long => x.toString()
+      case _ => throw new Exception("Can not cast value in maxFieldLength")
+    }
+
+    stringVal.length()
+
+  }
+
   val udfIsEmpty = udf[Boolean,String] (isEmpty)
+
   val udfIsNumeric = udf[Boolean, String](isNumeric)
+
+  val udfFieldLen = udf[Int, String](fieldLen)
 
 }
