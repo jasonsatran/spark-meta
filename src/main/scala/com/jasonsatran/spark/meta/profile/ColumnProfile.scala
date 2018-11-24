@@ -61,7 +61,11 @@ object ColumnProfile{
     val emptyCount = dfColumn.withColumn("isEmpty", udfIsEmpty(col(columnName))).filter(col("isEmpty")===true).count
     val nullCount = dfColumn.withColumn("isNull", col(columnName).isNull).filter(col("isNull")).count()
     val numericCount = dfColumn.withColumn("isNumeric", udfIsNumeric(col(columnName))).filter(col("isNumeric")===true).count
-    val maxFieldLength = dfColumn.withColumn("fieldLen", udfFieldLen(col(columnName))).groupBy(col("fieldLen")).max("fieldLen").collect()(0)(0).asInstanceOf[Int]
+
+    val maxFieldLength = dfColumn.
+      withColumn("fieldLen", udfFieldLen(col(columnName))).
+      agg(max(col("fieldLen"))).collect()(0)(0).toString.toInt
+
     new ColumnProfile(columnName, recordCount, uniqueValues, emptyCount, nullCount, numericCount, maxFieldLength)
   }
 }

@@ -1,5 +1,5 @@
 Column Name,Record Count,Unique Values,Empty Strings,Null Values,Percent Fill,Percent Numeric,Max Length
 team,5,5,0,0,100.0,0.0,9
 lastChampionship,5,5,1,0,80.0,80.0,4
-city,5,3,0,0,100.0,0.0,8
+city,5,3,0,0,100.0,0.0,10
 number 1 fan,5,4,0,2,60.0,0.0,5
